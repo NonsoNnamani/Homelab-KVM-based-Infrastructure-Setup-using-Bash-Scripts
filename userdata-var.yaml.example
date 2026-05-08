@@ -1,0 +1,8 @@
+HOSTNAME: "..."
+NAME: "..."
+SSH_KEY: "ssh-...."
+PASSWORD_HASH: "........"
+ADDRESS_CIDR: 10.10.0.5/24
+GATEWAY4: 10.10.0.1
+DISK_SIZE: 60G
+BRIDGE_NAME: k8s-net1
