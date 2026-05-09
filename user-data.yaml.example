@@ -1,0 +1,11 @@
+#cloud-config
+users:
+  - name: username
+    groups: sudo
+    shell: /bin/bash
+    lock_passwd: false
+    passwd: 'password hash using >> openssl passwd -6 "mypassword" '
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - ssh-ed25519xxxxxxxxxxxxxxxxxxxxx public_key
+ssh_pwauth: true
