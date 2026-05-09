@@ -33,6 +33,7 @@ sudo apt install -y bridge-utils
 sudo apt install -y virtinst
 sudo apt install -y virt-manager
 sudo apt install -y ovmf
+sudo apt install -y cloud-image-utils
 
 # 4. Enable and start the libvirt daemon
 echo "Enabling and starting libvirtd service..."
