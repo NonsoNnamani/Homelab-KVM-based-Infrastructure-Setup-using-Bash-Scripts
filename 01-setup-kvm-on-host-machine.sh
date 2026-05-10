@@ -26,7 +26,12 @@ echo "Virtualization support detected."
 
 # 3. Install KVM and related packages
 echo "Installing KVM, libvirt, and related tools... Installed separately because of dependencies "
-sudo apt install -y qemu-system-x86-hwe
+## Check Ubuntu version to determine which qemu package to install
+VERSION=$(lsb_release -rs) && \
+{ [ "$VERSION" = "26.04" ] && sudo apt install -y qemu-system-x86-hwe; } || \
+{ [ "$VERSION" = "24.04" ] && sudo apt install -y qemu-system-x86; }
+
+# Continue installing KVM and related packages
 sudo apt install -y libvirt-daemon-system
 sudo apt install -y libvirt-clients
 sudo apt install -y bridge-utils
