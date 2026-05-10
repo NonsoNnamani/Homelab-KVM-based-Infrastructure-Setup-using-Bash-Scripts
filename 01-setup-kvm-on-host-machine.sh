@@ -34,7 +34,12 @@ sudo apt install -y virtinst
 sudo apt install -y virt-manager
 sudo apt install -y ovmf
 sudo apt install -y cloud-image-utils
-
+sudo apt install -y libguestfs-tools
+sudo apt install -y qemu-utils
+sudo apt install -y libosinfo-bin
+sudo apt install -y wget
+sudo apt update && sudo apt install -y
+  
 # 4. Enable and start the libvirt daemon
 echo "Enabling and starting libvirtd service..."
 sudo systemctl enable --now libvirtd
