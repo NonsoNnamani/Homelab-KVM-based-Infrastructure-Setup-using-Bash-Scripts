@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# HostA Setup - VXLAN Bridge Project
-echo "Starting HostA Setup..."
+# HostB Setup - VXLAN Bridge Project
+echo "Starting HostB Setup..."
 
 # 1. Install dependencies
 sudo apt-get update
@@ -16,19 +16,19 @@ cat << 'EOF' | sudo tee /usr/local/bin/vxlan-init.sh
 #!/bin/bash
 
 # Variables (Update these with your actual values)
-LOCAL_IP=172.26.48.148
-REMOTE_IP=172.31.95.108
+PHYSICAL_IP=100.71.37.76
+REMOTE_IP=100.114.18.30
 VIRTUAL_BRIDGE=virbr10
 VXLAN_INTERFACE=vxlan0
 VNI=100
 # Wait for the physical interface and libvirt bridge to be ready
 sleep 10
 
-# Create VXLAN interface if it doesn't exist
+# Create VXLAN interface if it doesn't exist using NEW MTU for Tailscale compatibility
 if ! ip link show $VXLAN_INTERFACE > /dev/null 2>&1; then
-    ip link add $VXLAN_INTERFACE type vxlan id $VNI remote $REMOTE_IP local $LOCAL_IP dstport 4789 dev eth0
-    ip link set $VXLAN_INTERFACE mtu 1450
-    ip link set $VIRTUAL_BRIDGE mtu 1450
+    ip link add $VXLAN_INTERFACE type vxlan id $VNI remote $REMOTE_IP local $PHYSICAL_IP dstport 4789 dev tailscale0
+    ip link set $VXLAN_INTERFACE mtu 1230
+    ip link set $VIRTUAL_BRIDGE mtu 1230
     ip link set $VXLAN_INTERFACE up
 fi
 
@@ -61,4 +61,4 @@ sudo systemctl enable --now vxlan-tunnel.service
 ip link show $VXLAN_INTERFACE
 bridge fdb show dev $VXLAN_INTERFACE
 sudo ufw status verbose
-echo "HostA Setup Complete. $VXLAN_INTERFACE is active and persistent."
+echo "HostB Setup Complete. $VXLAN_INTERFACE is active and persistent."

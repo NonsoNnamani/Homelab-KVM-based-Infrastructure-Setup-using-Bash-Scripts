@@ -14,10 +14,14 @@ sudo chmod 644 "$BASE_IMG"
 
 # 2. Define the nodes: "name:ram:vcpus:disk:static_ip"
 nodes=(
-    "k8s-master:4096:4:60G"
+    "k8s-master1:4096:2:60G"
+    "k8s-master2:4096:2:60G"
+    "k8s-master3:4096:2:60G"
     "k8s-worker1:8192:4:100G"
     "k8s-worker2:8192:4:100G"
 )
+
+NETWORK=k8s-net
 
 for node in "${nodes[@]}"; do
     IFS=":" read -r NAME RAM CPU DISK <<< "$node"
@@ -49,7 +53,7 @@ for node in "${nodes[@]}"; do
       --disk "path=/var/lib/libvirt/images/${NAME}.qcow2,device=disk" \
       --disk "path=/var/lib/libvirt/images/${NAME}-seed.iso,device=cdrom" \
       --import \
-      --network network=k8s-net1 \
+      --network network=$NETWORK \
       --noautoconsole \
       --graphics none
 

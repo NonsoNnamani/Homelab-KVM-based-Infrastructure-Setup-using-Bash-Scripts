@@ -3,7 +3,7 @@
 set -euo pipefail
 
 NETWORK_NAME="k8s-net"
-BRIDGE_NAME="virbr10"
+VIRTUAL_BRIDGE="virbr10"
 XML_FILE="$HOME/${NETWORK_NAME}.xml"
 
 echo "Creating libvirt network definition: ${XML_FILE}"
@@ -12,7 +12,7 @@ cat <<EOF | tee "${XML_FILE}" >/dev/null
 <network>
   <name>$NETWORK_NAME</name>
   <forward mode='nat'/>
-  <bridge name='$BRIDGE_NAME' stp='on' delay='0'/>
+  <bridge name='$VIRTUAL_BRIDGE' stp='on' delay='0'/>
   <ip address='10.10.10.1' netmask='255.255.255.0'>
     <dhcp>
       <range start='10.10.10.50' end='10.10.10.200'/>
