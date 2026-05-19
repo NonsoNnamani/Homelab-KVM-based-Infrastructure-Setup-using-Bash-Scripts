@@ -43,7 +43,8 @@ sudo apt install -y libguestfs-tools
 sudo apt install -y qemu-utils
 sudo apt install -y libosinfo-bin
 sudo apt install -y wget
-sudo apt update && sudo apt install -y
+sudo apt update && sudo apt install -y software-properties-common && sudo add-apt-repository --yes --update ppa:ansible/ansible && sudo apt install -y ansible
+sudo apt update
   
 # 4. Enable and start the libvirt daemon
 echo "Enabling and starting libvirtd service..."
